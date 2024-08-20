@@ -1,11 +1,11 @@
 """
 This module contains the views (route handlers).
-The routes are associated with the main blueprint.
+The routes are associated with the api blueprint.
 """
 from flask import Blueprint
 
-bp = Blueprint("main", __name__)
+api_bp = Blueprint("api", __name__, url_prefix="/api")
 
-@bp.route("/")
+@api_bp.route("/solve")
 def index():
     return "Hello, index!"

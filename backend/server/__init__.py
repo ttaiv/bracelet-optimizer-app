@@ -9,7 +9,7 @@ def create_app():
     Create a Flask application instance.
     """
     app = Flask(__name__)
-    # Register the main blueprint that contains the views (route handlers).
-    app.register_blueprint(views.bp)
+    # Register the api blueprint that contains the views (route handlers).
+    app.register_blueprint(views.api_bp)
 
     return app

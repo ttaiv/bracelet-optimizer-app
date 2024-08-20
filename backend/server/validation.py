@@ -1,4 +1,3 @@
-import json
 from jsonschema import validate
 
 solve_schema = {

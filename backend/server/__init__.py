@@ -1,19 +1,15 @@
+"""
+This module contains the Flask application factory.
+"""
 from flask import Flask
+from . import views
 
-def create_app(config_filename=None):
+def create_app():
+    """
+    Create a Flask application instance.
+    """
     app = Flask(__name__)
-
-    # Load configuration settings
-    if config_filename:
-        app.config.from_pyfile(config_filename)
-    else:
-        app.config.from_object('config.Config')  # Load default config
-
-    # Initialize extensions here, if any
-
-    # Register Blueprints (routes) here
-
-    # Other app setup tasks
-    # e.g., app.before_first_request(some_function)
+    # Register the main blueprint that contains the views (route handlers).
+    app.register_blueprint(views.bp)
 
     return app

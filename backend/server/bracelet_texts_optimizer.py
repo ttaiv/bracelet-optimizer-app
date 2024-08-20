@@ -6,6 +6,7 @@ https://github.com/ttaiv/taylor-bracelet-optimizer/blob/3ed505d7ea6f7f3a02c7a1ae
 
 import pulp
 
+
 def create_text_letter_counts_matrix(texts: list[str]) -> list[list[int]]:
     """
     Creates a matrix where each row represents a text and each column represents a letter.
@@ -45,7 +46,7 @@ def find_best_texts_ilp(
         print_output (bool): Whether to print the output of the ILP solver.
 
     Returns:
-        tuple[int, list[str], int]: A tuple of the lowest letter count possible and the
+        tuple[int, list[str]]: A tuple of the lowest letter count possible and the
         list of texts chosen.
 
     Raises:

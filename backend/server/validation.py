@@ -1,18 +1,18 @@
-from jsonschema import validate
+"""
+This module contains the validation schema for the solve endpoint.
+"""
 
-solve_schema = {
-    "type": "object",
-    "properties": {
-        "letter_counts": {
-            "type": "object",
-            "additionalProperties": {"type": "integer"},
-            "propertyNames": {"type": "string"},
-        },
-        "texts": {"type": "array", "items": {"type": "string"}},
-    },
-    "required": ["letter_counts"],
-}
+from marshmallow import Schema, fields, validate
 
 
-def validate_solve(data):
-    validate(data, solve_schema)
+class SolveSchema(Schema):
+    """
+    Schema for the request data of the solve endpoint.
+    """
+
+    letter_counts = fields.Dict(
+        keys=fields.Str(validate=validate.Regexp(r"^[a-zA-Z]$")),
+        values=fields.Int(validate=validate.Range(min=0)),
+        required=True,
+    )
+    texts = fields.List(fields.Str(), required=False)

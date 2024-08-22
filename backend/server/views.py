@@ -4,8 +4,9 @@ The routes are associated with the api blueprint.
 """
 
 from flask import Blueprint, request, jsonify, current_app
+from marshmallow import ValidationError
 from .bracelet_texts_optimizer import find_best_texts_ilp
-from .validation import validate_solve
+from .validation import SolveSchema
 from .utils import preprocess_texts
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
@@ -20,8 +21,17 @@ def solve_best_texts():
     Returns:
         Response: JSON response containing the minimized letter count and the best texts.
     """
-    data: dict = request.get_json()
-    validate_solve(data)  # Will raise an error if the data is invalid
+    if not request.is_json:
+        return jsonify({"error": "Request content type must be application/json"}), 400
+    schema = SolveSchema()
+    try:
+        data = schema.load(request.get_json())
+    except ValidationError as e:
+        return jsonify({"error": e.messages}), 400
+
+    if not isinstance(data, dict):
+        # This is to satisfy the type checker, data should always be a dictionary after validation.
+        return jsonify({"error": "Data must be a dictionary after validation."}), 500
 
     letter_counts: dict[str, int] = data["letter_counts"]
     texts: list[str] = data.get("texts", current_app.config["DEFAULT_TEXTS"])

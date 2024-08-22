@@ -1,9 +1,8 @@
-const API_URL = "http://127.0.0.1:5000/api";
+import { getDefaultTexts } from "./api";
 
 export default async function Home() {
 
-  const response = await fetch(`${API_URL}/texts`)
-  const texts: string[] = await response.json()
+  const texts = await getDefaultTexts();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

@@ -114,3 +114,39 @@ Content-Type: application/json
 {
   
 }
+###
+# Test with non A-Z letter
+
+POST http://127.0.0.1:5000/api/solve
+Content-Type: application/json
+
+{
+  "letter_counts": {
+    "A": 10,
+    "B": 17,
+    "C": 4,
+    "D": 4,
+    "E": 20,
+    "F": 20,
+    "GO": 7,
+    "H": 9,
+    "I": 12,
+    "J": 18,
+    "K": 9,
+    "L": 11,
+    "M": 6,
+    "N": 8,
+    "O": 9,
+    "P": 14,
+    "Q": 12,
+    "R": 10,
+    "S": 8,
+    "T": 8,
+    "U": 12,
+    "V": 20,
+    "W": 8,
+    "X": 6,
+    "Y": 7,
+    "Z": 17
+  }
+}

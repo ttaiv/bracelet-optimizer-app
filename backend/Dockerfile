@@ -18,4 +18,4 @@ CMD ["flask", "--app", "bracelet-opt-server", "run", "--host=0.0.0.0", "--debug"
 
 # Production image
 FROM base AS prod
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "bracelet-opt-server:create_app()"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "--log-level", "debug", "bracelet-opt-server:create_app()"]

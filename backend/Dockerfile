@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["flask", "--app", "server", "run", "--host=0.0.0.0", "--debug"]
+CMD ["flask", "--app", "bracelet-opt-server", "run", "--host=0.0.0.0", "--debug"]

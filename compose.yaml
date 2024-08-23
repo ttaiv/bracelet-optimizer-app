@@ -1,0 +1,14 @@
+services:
+  server-dev:
+    build:
+      context: ./backend/
+      target: dev
+    ports:
+      - "5000:5000"
+
+  server-prod:
+    build:
+      context: ./backend/
+      target: prod
+    ports:
+      - "5000:5000"

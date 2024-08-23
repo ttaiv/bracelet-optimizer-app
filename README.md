@@ -26,7 +26,7 @@ This will be a fullstack app that allows users to optimize building [friendship 
 
     for production backend server.
 
-3. The backend server will be available at [http://localhost:5000`](http://localhost:5000).
+3. The backend server will be available at [http://localhost:5000](http://localhost:5000).
 
 ### Running the frontend
 

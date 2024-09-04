@@ -38,3 +38,4 @@ const solveBestTexts = async (
 };
 
 export { getDefaultTexts, solveBestTexts };
+export type { SolveRequestPayload, SolveResponse };

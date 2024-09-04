@@ -7,7 +7,7 @@ from flask import Blueprint, request, jsonify, current_app
 from marshmallow import ValidationError
 from .bracelet_texts_optimizer import find_best_texts_ilp
 from .validation import SolveSchema
-from .utils import preprocess_texts
+from .utils import preprocess_texts, calculate_leftover_letters
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -41,9 +41,16 @@ def solve_best_texts():
     minimized_letter_count, best_texts = find_best_texts_ilp(
         letter_counts, preprocessed_texts, print_output=False
     )
+    leftover_letters: dict[str, int] = calculate_leftover_letters(
+        letter_counts, best_texts
+    )
 
     return jsonify(
-        {"minimized_letter_count": minimized_letter_count, "best_texts": best_texts}
+        {
+            "minimized_letter_count": minimized_letter_count,
+            "best_texts": best_texts,
+            "leftover_letters": leftover_letters,
+        }
     )
 
 

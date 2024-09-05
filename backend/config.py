@@ -1,3 +1,4 @@
+CORS_ORIGINS = ["http://localhost:3000"]
 DEFAULT_TEXTS = [
     "A Message From Taylor",
     "A Perfectly Good Heart",

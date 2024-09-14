@@ -3,41 +3,43 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { solveBestTexts, SolveRequestPayload, SolveResponse } from "./api";
 
-// Generate the alphabet letters
+// Create an array of alphabet letters
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-const AlphabetForm: React.FC = () => {
-  // Initialize state with letter counts set to 0
-  const initialFormValues: SolveRequestPayload = {
-    letter_counts: letters.reduce(
-      (acc, letter) => {
-        acc[letter] = 0;
-        return acc;
-      },
-      {} as Record<string, number>,
-    ),
-  };
+const LetterForm = () => {
+  // Define the initial form values with letter to be 0
+  const initialFormValues: Record<string, number> = letters.reduce(
+    (acc, letter) => {
+      acc[letter] = 0;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
+  // State to store current letter counts in the form
   const [formValues, setFormValues] =
-    useState<SolveRequestPayload>(initialFormValues);
+    useState<Record<string, number>>(initialFormValues);
+
+  // State to store the result from the API call to the bracelet optimizer
   const [result, setResult] = useState<SolveResponse | null>(null);
 
+  // Handler function for letter form input field changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({
       ...prev,
-      letter_counts: {
-        ...prev.letter_counts,
-        [name]: parseInt(value, 10) || 0,
-      },
+      [name]: parseInt(value, 10) || 0,
     }));
   };
 
+  // Handler function for form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const response: SolveResponse = await solveBestTexts(formValues);
-      setResult(response); // Save the result to state
+      const response: SolveResponse = await solveBestTexts({
+        letter_counts: formValues,
+      });
+      setResult(response);
     } catch (error) {
       console.error("Error solving best texts:", error);
     }
@@ -45,6 +47,7 @@ const AlphabetForm: React.FC = () => {
 
   return (
     <div>
+      {/* Display the letter form for inputting letter counts */}
       <form
         onSubmit={handleSubmit}
         className="space-y-4 p-6 max-w-md mx-auto bg-white shadow-lg rounded-lg"
@@ -64,7 +67,7 @@ const AlphabetForm: React.FC = () => {
               type="number"
               id={letter}
               name={letter}
-              value={formValues.letter_counts[letter]}
+              value={formValues[letter]}
               onChange={handleChange}
               min="0"
               className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -79,6 +82,8 @@ const AlphabetForm: React.FC = () => {
         </button>
       </form>
 
+      {/* Display result if available */}
+      {/* TODO: Move result display logic to a separate component */}
       {result && (
         <div className="mt-6 p-6 max-w-md mx-auto bg-white shadow-lg rounded-lg">
           <h2 className="text-2xl font-bold mb-4 text-center">Results</h2>
@@ -111,4 +116,4 @@ const AlphabetForm: React.FC = () => {
   );
 };
 
-export default AlphabetForm;
+export default LetterForm;
